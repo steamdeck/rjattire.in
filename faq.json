@@ -1,20 +1,17 @@
 [
     {
-        "upvoteCount": "39",
-        "text": "This is a random answer example 1.",
-        "dateCreated": "2010-12-06T21:11Z",
-        "name": "lonelyuser1234"
+        "question": "What is the return policy?",
+        "answer": "You can return products within 30 days of purchase for a full refund.",
+        "name": "support_team"
     },
     {
-        "upvoteCount": "58",
-        "text": "Another example of an answer with different data.",
-        "dateCreated": "2011-05-09T14:00Z",
-        "name": "happyuser5678"
+        "question": "How do I track my order?",
+        "answer": "You can track your order through the link sent to your email after purchase.",
+        "name": "customer_service"
     },
     {
-        "upvoteCount": "75",
-        "text": "Here is a third answer, selected randomly.",
-        "dateCreated": "2012-07-22T11:33Z",
-        "name": "curioususer9876"
+        "question": "Do you offer international shipping?",
+        "answer": "Yes, we offer international shipping to many countries worldwide.",
+        "name": "shipping_team"
     }
 ]
