@@ -1,0 +1,20 @@
+[
+    {
+        "upvoteCount": "39",
+        "text": "This is a random answer example 1.",
+        "dateCreated": "2010-12-06T21:11Z",
+        "name": "lonelyuser1234"
+    },
+    {
+        "upvoteCount": "58",
+        "text": "Another example of an answer with different data.",
+        "dateCreated": "2011-05-09T14:00Z",
+        "name": "happyuser5678"
+    },
+    {
+        "upvoteCount": "75",
+        "text": "Here is a third answer, selected randomly.",
+        "dateCreated": "2012-07-22T11:33Z",
+        "name": "curioususer9876"
+    }
+]
