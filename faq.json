@@ -27,10 +27,12 @@
     {
         "question": "Where can I find bridal Pakistani suits in Hyderabad?",
         "answer": "Pakistani bridal suits can be bought from any corner of Hyderabad as it offers variety of collection and design perfect for your special day! In Hyderabad some of the popular locations are:-
-                  1. Banjara Hills.
-                  2. Ameerpet Street Shopping.
-                  3. Laad Bazzar
-                  4. Madina Market",
+                  <ul>
+                   <li>Banjara Hills</li>
+                  <li>Ameerpet Street Shopping</li>
+                  <li>Laad Bazzar</li>
+                   <li>Madina Market</li>
+               </ul>",
         "name": "RJ Attire Team"
     },
     {
