@@ -1,16 +1,20 @@
-{
-  "faqs": [
-    {
-      "question": "Where to buy Pakistani suits in India?",
-      "answer": "Pakistani suits are available in both online and offline stores. In India, the best places to buy them are in cities like Delhi, Mumbai, Jodhpur, Jaipur, and Karnataka, known for their embroidered work, traditional clothing, and a wide variety of fabric collections.",
-      "name": "RJ Attire Team",
-      "keywords": "Pakistani suits, India, buy, traditional clothing"
-    },
-    {
-      "question": "Where to buy Pakistani suits in Mumbai?",
-      "answer": "Pakistani suits in Mumbai can be bought from shopping areas like Bandra, Fort, Colaba, Dadar, and Chor Bazaar, which are famous for offering modern and unique designs. Moreover, you can explore online platforms that offer original suits from well-renowned designers with free home delivery options.",
-      "name": "RJ Attire Team",
-      "keywords": "maria b, mariab, xxxxx, zzzzz"
-    }
-  ]
-}
+[
+  {
+    "question": "Where to buy Pakistani suits in India?",
+    "answer": "Pakistani suits are available in both online and offline stores. In India, the best places to buy them are in cities like Delhi, Mumbai, Jodhpur, Jaipur, and Karnataka, known for their embroidered work, traditional clothing, and a wide variety of fabric collections.",
+    "name": "RJ Attire Team",
+    "keywords": ["Pakistani suits", "India", "buy", "traditional clothing"]
+  },
+  {
+    "question": "Where to buy Pakistani suits in Mumbai?",
+    "answer": "Pakistani suits in Mumbai can be bought from shopping areas like Bandra, Fort, Colaba, Dadar, and Chor Bazaar, which are famous for offering modern and unique designs. Moreover, you can explore online platforms that offer original suits from well-renowned designers with free home delivery options.",
+    "name": "RJ Attire Team",
+    "keywords": ["Pakistani suits", "Mumbai", "buy", "shopping areas"]
+  },
+  {
+    "question": "What fabrics are used in Pakistani suits?",
+    "answer": "Pakistani suits are usually made from luxurious fabrics such as chiffon, georgette, silk, cotton, and velvet. These fabrics offer comfort and style while being suitable for various occasions.",
+    "name": "RJ Attire Team",
+    "keywords": ["Pakistani suits", "fabrics", "chiffon", "georgette", "silk"]
+  }
+]
