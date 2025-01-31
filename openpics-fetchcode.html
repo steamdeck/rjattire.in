@@ -1,0 +1,254 @@
+<div class="product-images-gallery">
+  <h3>All Product Images</h3>
+  <div class="gallery" id="gallery">
+    {% assign found_images = false %}
+    
+    <!-- Loop through a specific collection's products, sorting by creation date (latest first) -->
+    {% assign collection_handle = 'open-pictures-pakistani-suits' %} <!-- Replace with your collection handle -->
+    {% assign collection_products = collections[collection_handle].products %}
+    
+    {% assign sorted_products = collection_products | sort: 'created_at' %}
+    
+    {% for product in sorted_products reversed %}
+      {% for media in product.media %}
+        {% if media.media_type == "image" %}
+          <div class="gallery-item">
+            <img src="{{ media.preview_image | img_url: 'medium' }}" alt="{{ media.alt }}" class="gallery-img" data-full-image="{{ media.preview_image | img_url: '2048x2048' }}">
+            <p class="gallery-item-caption">{{ media.alt }}</p>
+          </div>
+          {% assign found_images = true %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+    
+    {% if found_images == false %}
+      <p>No images found for products in this collection.</p>
+    {% endif %}
+  </div>
+
+  <!-- Load More Button -->
+  <div id="load-more-container" class="load-more-container">
+    <button id="load-more-btn" class="load-more-btn">Load More</button>
+    <div id="loader" class="loader">
+      <div class="spinner"></div> <!-- The spinner will be shown while loading more images -->
+    </div>
+  </div>
+</div>
+
+<!-- Popup Modal -->
+<div id="popup-modal" class="popup-modal">
+  <div class="popup-content">
+    <span id="close-popup" class="popup-close-btn">&times;</span>
+    <!-- Preloader Spinner -->
+    <div id="preloader" class="preloader">
+      <div class="spinner"></div> <!-- This is the spinner -->
+    </div>
+    <!-- Popup Image -->
+    <img id="popup-img" class="popup-img" src="" alt="">
+  </div>
+</div>
+
+<style>
+  .product-images-gallery {
+    padding: 20px;
+  }
+
+  .gallery {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .gallery-item {
+    width: 48%; /* Default for mobile (2 images per row) */
+    border: 2px solid #ddd;
+    overflow: hidden;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    cursor: pointer; /* Indicates that the image is clickable */
+  }
+
+  .gallery-item-caption {
+    font-size: 14px;
+    color: #333;
+    padding: 10px;
+  }
+
+  /* Popup Styles */
+  .popup-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    z-index: 1000; /* Ensure it appears above other content */
+    justify-content: center;
+    align-items: center;
+  }
+
+  .popup-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    overflow: hidden; /* Prevent image from overflowing */
+  }
+
+  .popup-img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;   /* Ensures the image does not overflow */
+    max-height: 80vh;  /* Limits the image height to 80% of the viewport height */
+    object-fit: contain; /* Keeps aspect ratio intact and scales image accordingly */
+    display: none; /* Initially hidden until image is loaded */
+  }
+
+  .popup-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+  }
+
+  /* Loader Spinner */
+  .loader {
+    display: none; /* Hidden by default */
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Load More Button Styles */
+  .load-more-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .load-more-btn {
+    background-color: #3498db;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .load-more-btn:hover {
+    background-color: #2980b9;
+  }
+
+  /* Responsive Layout */
+  @media (min-width: 600px) {
+    .gallery-item {
+      width: 32%; /* 3 items per row on tablets */
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-item {
+      width: 23%; /* 4 items per row on desktop */
+    }
+  }
+</style>
+
+<script>
+  // Get elements
+  const loadMoreBtn = document.getElementById('load-more-btn');
+  const loader = document.getElementById('loader'); // Loader element
+  const gallery = document.getElementById('gallery'); // Gallery container
+  const loadMoreContainer = document.getElementById('load-more-container'); // Load more container
+
+  let page = 1; // Current page (to load more images)
+  let isLoading = false; // Flag to prevent multiple loads at the same time
+
+  // Load more images when the button is clicked
+  loadMoreBtn.addEventListener('click', function() {
+    if (!isLoading) {
+      isLoading = true;
+      loader.style.display = 'block'; // Show the loader
+      loadMoreBtn.disabled = true;  // Disable button to prevent multiple clicks
+
+      // Simulate an API request to fetch more images
+      setTimeout(function() {
+        loadMoreImages(); // Load more images
+        loader.style.display = 'none'; // Hide the loader after images are loaded
+        loadMoreBtn.disabled = false; // Re-enable the button
+      }, 2000); // Simulate a delay (e.g., fetching from an API)
+    }
+  });
+
+  // Function to load more images (replace with actual API or dynamic content loading)
+  function loadMoreImages() {
+    const newImages = `
+      <div class="gallery-item"><img src="https://via.placeholder.com/300x400" alt="New Image 1" class="gallery-img" data-full-image="https://via.placeholder.com/1200x1600"><p class="gallery-item-caption">New Image 1</p></div>
+      <div class="gallery-item"><img src="https://via.placeholder.com/300x400" alt="New Image 2" class="gallery-img" data-full-image="https://via.placeholder.com/1200x1600"><p class="gallery-item-caption">New Image 2</p></div>
+      <div class="gallery-item"><img src="https://via.placeholder.com/300x400" alt="New Image 3" class="gallery-img" data-full-image="https://via.placeholder.com/1200x1600"><p class="gallery-item-caption">New Image 3</p></div>
+    `;
+    
+    gallery.innerHTML += newImages; // Append new images to the gallery
+
+    // Re-attach the event listeners to the new images
+    const newGalleryImages = document.querySelectorAll('.gallery-img');
+    newGalleryImages.forEach(image => {
+      image.addEventListener('click', function() {
+        const fullImageUrl = this.getAttribute('data-full-image');
+        openPopup(fullImageUrl); // Open the image in the popup
+      });
+    });
+  }
+
+  // Open the image in the popup
+  function openPopup(imageUrl) {
+    const popupModal = document.getElementById('popup-modal');
+    const popupImg = document.getElementById('popup-img');
+    const preloader = document.getElementById('preloader');
+
+    popupModal.style.display = 'flex';
+    preloader.style.display = 'block';
+    popupImg.src = imageUrl;
+
+    popupImg.onload = function() {
+      preloader.style.display = 'none';
+      popupImg.style.display = 'block';
+    };
+
+    const closePopup = document.getElementById('close-popup');
+    closePopup.addEventListener('click', function() {
+      popupModal.style.display = 'none';
+      popupImg.style.display = 'none';
+    });
+
+    window.addEventListener('click', function(event) {
+      if (event.target === popupModal) {
+        popupModal.style.display = 'none';
+        popupImg.style.display = 'none';
+      }
+    });
+  }
+</script>
