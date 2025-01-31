@@ -13,7 +13,7 @@
       {% for media in product.media %}
         {% if media.media_type == "image" %}
           <div class="gallery-item">
-            <img src="{{ media.preview_image | img_url: 'medium' }}" alt="{{ media.alt }}" class="gallery-img" data-full-image="{{ media.preview_image | img_url: '2048x2048' }}">
+            <img src="{{ media.preview_image | img_url: 'medium' }}" alt="{{ media.alt }}" class="gallery-img" data-full-image="{{ media.preview_image | img_url: '2048x2048' }}" loading="lazy">
             <p class="gallery-item-caption">{{ media.alt }}</p>
           </div>
           {% assign found_images = true %}
@@ -231,11 +231,17 @@
 
     popupModal.style.display = 'flex';
     preloader.style.display = 'block';
-    popupImg.src = imageUrl;
+    popupImg.style.display = 'none';  // Hide the image until it loads
+    popupImg.src = '';  // Reset image source in case it's the same image
 
-    popupImg.onload = function() {
+    // Preload image and show it once it's ready
+    const image = new Image();
+    image.src = imageUrl;  // Set the high-res image URL
+
+    image.onload = function() {
+      popupImg.src = imageUrl;
       preloader.style.display = 'none';
-      popupImg.style.display = 'block';
+      popupImg.style.display = 'block';  // Show the image after it's loaded
     };
 
     const closePopup = document.getElementById('close-popup');
@@ -251,4 +257,12 @@
       }
     });
   }
+
+  // Attach event listener to gallery images
+  document.querySelectorAll('.gallery-img').forEach(image => {
+    image.addEventListener('click', function() {
+      const fullImageUrl = this.getAttribute('data-full-image');
+      openPopup(fullImageUrl);  // Open the image in the popup
+    });
+  });
 </script>
