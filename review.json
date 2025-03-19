@@ -1,0 +1,32 @@
+[
+  {
+    "reviewer": "John Doe",
+    "rating": 5,
+    "review": "I absolutely love this product! The quality is fantastic, and it exceeded my expectations. Highly recommend Maria B for anyone looking for top-notch style and quality.",
+    "date": "2025-03-19"
+  },
+  {
+    "reviewer": "Sarah Lee",
+    "rating": 4,
+    "review": "Great product! The design is beautiful, but I wish it was a little more comfortable. Still, it's a fantastic choice, especially if you're into Maria B styles.",
+    "date": "2025-03-18"
+  },
+  {
+    "reviewer": "Jane Smith",
+    "rating": 5,
+    "review": "Maria B never disappoints! This item is perfect for any occasion. The fabric feels luxurious, and it fits perfectly. Worth every penny!",
+    "date": "2025-03-17"
+  },
+  {
+    "reviewer": "Aliya Khan",
+    "rating": 3,
+    "review": "It's a good product, but it doesn't quite match my expectations from Maria B. The fit was a little off, but the quality is still good.",
+    "date": "2025-03-15"
+  },
+  {
+    "reviewer": "Emma Patel",
+    "rating": 4,
+    "review": "Love the elegant design, and it has a classy feel to it, which I expect from Maria B. It's a bit pricier than expected, but overall, a good buy!",
+    "date": "2025-03-14"
+  }
+]
