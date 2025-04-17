@@ -1,0 +1,99 @@
+ body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+
+  #randomArticle {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  #randomArticle h4 {
+    font-size: 1.5em;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+  }
+
+  #randomArticle p {
+    font-size: 1.05em;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+
+  #randomArticle a {
+    color: #3498db;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  #randomArticle a:hover {
+    text-decoration: underline;
+    color: #1abc9c;
+  }
+
+  #randomArticle blockquote {
+    border-left: 4px solid #3498db;
+    padding-left: 15px;
+    color: #555;
+    font-style: italic;
+    background-color: #f1f1f1;
+    margin: 20px 0;
+  }
+
+  #randomArticle ul {
+    padding-left: 20px;
+    margin: 15px 0;
+  }
+
+  #randomArticle li {
+    margin-bottom: 10px;
+  }
+
+  #randomArticle h2, #randomArticle h3 {
+    margin: 20px 0 10px;
+    font-weight: bold;
+  }
+
+  article {
+    background-color: #fdfdfd;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s;
+  }
+
+  article:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  }
+
+  table {
+    width: 100%;
+    margin: 15px 0;
+    border-collapse: collapse;
+  }
+
+  table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    #randomArticle {
+      padding: 15px;
+    }
+
+    article, table {
+      font-size: 0.95em;
+    }
+  }
