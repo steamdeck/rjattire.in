@@ -22,10 +22,22 @@
 </head>
 <body>
   <h1>🖼️ RJ Attire Product Images</h1>
-  <div class="gallery">
-    {% for img in images %}
-      <img src="{{ img }}" alt="Product Image">
-    {% endfor %}
-  </div>
+  <div id="gallery" class="gallery"></div>
+
+  <script>
+    // Fetch images from the Flask API
+    fetch('https://rjattirein.onrender.com/images')
+      .then(response => response.json())
+      .then(images => {
+        const gallery = document.getElementById('gallery');
+        images.forEach(imgUrl => {
+          const imgElement = document.createElement('img');
+          imgElement.src = imgUrl;
+          imgElement.alt = 'Product Image';
+          gallery.appendChild(imgElement);
+        });
+      })
+      .catch(err => console.error('Error fetching images:', err));
+  </script>
 </body>
 </html>
