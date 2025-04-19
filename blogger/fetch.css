@@ -1,99 +1,116 @@
- body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
-    margin: 0;
-    padding: 0;
+
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #f9f9f9;
+    color: #222;
+    padding: 2rem;
+    line-height: 1.6;
   }
 
   #randomArticle {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
-  #randomArticle h4 {
-    font-size: 1.5em;
-    color: #2c3e50;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 10px;
-  }
-
-  #randomArticle p {
-    font-size: 1.05em;
-    line-height: 1.6;
-    margin-bottom: 15px;
-  }
-
-  #randomArticle a {
-    color: #3498db;
+  a {
+    color: #0077cc;
     text-decoration: none;
-    transition: all 0.3s ease;
   }
 
-  #randomArticle a:hover {
+  a:hover {
     text-decoration: underline;
-    color: #1abc9c;
   }
 
-  #randomArticle blockquote {
-    border-left: 4px solid #3498db;
-    padding-left: 15px;
+  ul, ol {
+    padding-left: 1.5rem;
+    background: #fff;
+    border-left: 4px solid #0077cc;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  li {
+    margin-bottom: 0.5rem;
+  }
+
+  blockquote {
+    font-style: italic;
+    border-left: 4px solid #ccc;
+    padding-left: 1rem;
+    margin: 0;
+    background: #f1f1f1;
+    border-radius: 6px;
+    padding: 1rem;
+  }
+
+  blockquote a {
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  strong, b {
+    font-weight: bold;
+    color: #444;
+  }
+
+  em, i {
     color: #555;
     font-style: italic;
-    background-color: #f1f1f1;
-    margin: 20px 0;
   }
 
-  #randomArticle ul {
-    padding-left: 20px;
-    margin: 15px 0;
+  h1, h2, h3 {
+    margin: 0.5rem 0;
+    line-height: 1.2;
   }
 
-  #randomArticle li {
-    margin-bottom: 10px;
+  h1 {
+    font-size: 2rem;
+    color: #1a1a1a;
   }
 
-  #randomArticle h2, #randomArticle h3 {
-    margin: 20px 0 10px;
-    font-weight: bold;
+  h2 {
+    font-size: 1.5rem;
+    color: #333;
   }
 
-  article {
-    background-color: #fdfdfd;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
-    transition: box-shadow 0.3s;
-  }
-
-  article:hover {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  h3 {
+    font-size: 1.2rem;
+    color: #444;
   }
 
   table {
     width: 100%;
-    margin: 15px 0;
     border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
   }
 
   table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
+    padding: 0.75rem;
+    border-bottom: 1px solid #eee;
   }
 
-  @media (max-width: 600px) {
-    #randomArticle {
-      padding: 15px;
-    }
+  article {
+    border: 1px solid #ddd;
+    background: #fafafa;
+    border-radius: 10px;
+    padding: 1rem;
+  }
 
-    article, table {
-      font-size: 0.95em;
-    }
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+
+  img:hover {
+    transform: scale(1.02);
   }
