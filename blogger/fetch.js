@@ -1,5 +1,5 @@
 
-<script>
+
   const sheetID = "1mEvctcgkjIY7_Z_rdnpxUcWGVf8ePWQAVrJVVhFooJo";
   const tabName = "Sheet1";
   const url = `https://opensheet.elk.sh/${sheetID}/${tabName}`;
@@ -106,4 +106,3 @@
       console.error("Error:", err);
       document.getElementById("randomArticle").innerHTML = "Failed to load content.";
     });
-</script>
