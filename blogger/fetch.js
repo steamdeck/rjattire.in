@@ -1,6 +1,4 @@
-
-
-  const sheetID = "1mEvctcgkjIY7_Z_rdnpxUcWGVf8ePWQAVrJVVhFooJo";
+const sheetID = "1mEvctcgkjIY7_Z_rdnpxUcWGVf8ePWQAVrJVVhFooJo";
   const tabName = "Sheet1";
   const url = `https://opensheet.elk.sh/${sheetID}/${tabName}`;
 
