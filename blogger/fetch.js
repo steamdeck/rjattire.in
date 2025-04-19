@@ -1,126 +1,109 @@
- const sheetID = "1mEvctcgkjIY7_Z_rdnpxUcWGVf8ePWQAVrJVVhFooJo";
+
+<script>
+  const sheetID = "1mEvctcgkjIY7_Z_rdnpxUcWGVf8ePWQAVrJVVhFooJo";
   const tabName = "Sheet1";
   const url = `https://opensheet.elk.sh/${sheetID}/${tabName}`;
 
   function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
+    const arr = array.slice();
+    for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+      [arr[i], arr[j]] = [arr[j], arr[i]];
     }
-    return array;
+    return arr;
   }
 
-  function randomWrap(text, url) {
-    const wrappers = [
-      t => `<p><strong><a href="${url}" target="_blank">${t}</a></strong></p>`,
-      t => `<blockquote><em>${t}</em> - <a href="${url}">Read more</a></blockquote>`,
-      t => `<ul><li><a href="${url}">${t}</a></li></ul>`,
-      t => `<p><b><u><a href="${url}">${t}</a></u></b></p>`,
-      t => `<h2><a href="${url}">${t}</a></h2>`,
-      t => `<table><tr><td><a href="${url}">${t}</a></td></tr></table>`,
-      t => `<p><i>${t}</i> — <a href="${url}">Explore</a></p>`,
-      t => `<article><header><h3>${t}</h3></header><footer><a href="${url}">Visit</a></footer></article>`
-    ];
-    const pick = wrappers[Math.floor(Math.random() * wrappers.length)];
-    return pick(text);
-  }
-
-  // Function to fetch random image from the XML sitemap
-  function fetchRandomImage() {
-    return fetch("https://rjattire.in/sitemap_products_2.xml?from=9612373819639&to=9638349537527")
-      .then(response => response.text())
-      .then(xmlText => {
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, "application/xml");
-
-        // Extract all image URLs from <image:loc> tags
-        const imageElements = xmlDoc.getElementsByTagName("image:loc");
-        const imageUrls = Array.from(imageElements).map(el => el.textContent);
-
-        // Pick a random image URL
-        return imageUrls[Math.floor(Math.random() * imageUrls.length)];
-      })
-      .catch(() => "https://rjattire.in/cdn/shop/files/rj_attire_logo.png?v=1724412913&width=400"); // Fallback image in case of error
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   fetch(url)
     .then(res => res.json())
     .then(data => {
-      const texts = shuffle(data.map(row => row["Text"]).filter(Boolean));
-      const links = shuffle(data.map(row => row["URL"]).filter(Boolean));
+      const rows = shuffle(data.filter(row => row.Text && row.URL));
+      const getRandomRow = () => rows[Math.floor(Math.random() * rows.length)];
+      const blocks = [];
 
-      console.log("Fetched Texts:", texts); // Debug
+      // <li>
+      const liCount = getRandomInt(5, 11);
+      const liItems = [];
+      for (let i = 0; i < liCount; i++) {
+        liItems.push(`<li><a href="${getRandomRow().URL}">${getRandomRow().Text}</a></li>`);
+      }
+      blocks.push(`<ul>${liItems.join("")}</ul>`);
 
-      const count = Math.min(texts.length, links.length, 10);
-      const sentenceLength = Math.floor(Math.random() * 4) + 5;
-      const sentenceWords = texts.slice(0, sentenceLength);
-      const randomSentence = sentenceWords.join(" ") + ".";
-
-      // Generate HTML
-      let html = `<section><h4>Today's Highlight:</h4><p>${randomSentence}</p></section><main>`;
-      const articles = [];
-
-      // Loop through and prepare articles with random images
-      const articlePromises = [];
-      for (let i = 0; i < count; i++) {
-        const text = texts[i];
-        const link = links[i];
-
-        // Fetch a random image for each article
-        const articlePromise = fetchRandomImage().then(image => {
-          // Generate HTML for the article
-          html += randomWrap(text, link);
-
-          // Prepare JSON-LD article structure
-         // Prepare JSON-LD article structure
-articles.push({
-  "@type": "Article",
-  "headline": text,
-  "mainEntityOfPage": link,
-  "url": link, // Adding the "url" field
-  "image": image,
-  "author": {
-    "@type": "Person",
-    "name": "RJ Attire",
-    "url": "https://rjattire.in" // Add the URL for the author (website of RJ Attire)
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "RJ Attire",
-    "url": "https://rjattire.in", // Add the URL for the publisher (website of RJ Attire)
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://rjattire.in/cdn/shop/files/rj_attire_logo.png?v=1724412913&width=400"
-    }
-  }
-});
-
-        });
-
-        articlePromises.push(articlePromise);
+      // <blockquote>
+      for (let i = 0; i < getRandomInt(3, 3); i++) {
+        const row = getRandomRow();
+        blocks.push(`<blockquote><em>${row.Text}</em> - <a href="${row.URL}">Read more</a></blockquote>`);
       }
 
-      // Wait for all images to be fetched and articles to be processed
-      Promise.all(articlePromises).then(() => {
-        html += "</main>";
+      // <strong>
+      for (let i = 0; i < getRandomInt(2, 5); i++) {
+        const row = getRandomRow();
+        blocks.push(`<p><strong><a href="${row.URL}" target="_blank">${row.Text}</a></strong></p>`);
+      }
 
-        // Inject the content into the page
-        document.getElementById("randomArticle").innerHTML = html;
+      // <em>
+      for (let i = 0; i < getRandomInt(2, 5); i++) {
+        const row = getRandomRow();
+        blocks.push(`<p><em>${row.Text}</em> — <a href="${row.URL}">Explore</a></p>`);
+      }
 
-        // Inject JSON-LD schema
-        const script = document.createElement("script");
-        script.type = "application/ld+json";
-        script.innerHTML = JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebPage",
-          "name": "Random Articles",
-          "description": "A curated list of insightful, fun, or inspirational articles refreshed randomly.",
-          "mainEntity": articles
-        });
-        document.head.appendChild(script);
+      // <article>
+      const articleRow = getRandomRow();
+      blocks.push(`<article><header><h3>${articleRow.Text}</h3></header><footer><a href="${articleRow.URL}">Visit</a></footer></article>`);
+
+      // <h1>
+      const h1Row = getRandomRow();
+      blocks.push(`<h1><a href="${h1Row.URL}">${h1Row.Text}</a></h1>`);
+
+      // <h2>
+      for (let i = 0; i < getRandomInt(2, 5); i++) {
+        const row = getRandomRow();
+        blocks.push(`<h2><a href="${row.URL}">${row.Text}</a></h2>`);
+      }
+
+      // <h3>
+      for (let i = 0; i < getRandomInt(2, 5); i++) {
+        const row = getRandomRow();
+        blocks.push(`<h3><a href="${row.URL}">${row.Text}</a></h3>`);
+      }
+
+      // <table>
+      const tableRows = [];
+      const trCount = getRandomInt(2, 9);
+      for (let i = 0; i < trCount; i++) {
+        const row = getRandomRow();
+        tableRows.push(`<tr><td><a href="${row.URL}">${row.Text}</a></td></tr>`);
+      }
+      blocks.push(`<table>${tableRows.join("")}</table>`);
+
+      // 4 clickable random images with random href
+      const imageRows = [];
+      while (imageRows.length < 4) {
+        const row = getRandomRow();
+        if (row.IMGURL) imageRows.push(row);
+      }
+
+      imageRows.forEach(imgRow => {
+        const linkRow = getRandomRow();
+        blocks.splice(
+          Math.floor(Math.random() * (blocks.length + 1)),
+          0,
+          `<a href="${linkRow.URL}" target="_blank">
+             <img src="${imgRow.IMGURL}" alt="${imgRow.Text}" title="${imgRow.Text}" 
+             style="max-width:100%;height:auto;border-radius:12px;margin:10px 0;">
+           </a>`
+        );
       });
+
+      // Final shuffle for true randomness in placement
+      const finalHTML = shuffle(blocks).join("\n");
+      document.getElementById("randomArticle").innerHTML = finalHTML;
     })
     .catch(err => {
-      console.error("Error fetching sheet data:", err);
-      document.getElementById("randomArticle").innerHTML = "Could not load content.";
+      console.error("Error:", err);
+      document.getElementById("randomArticle").innerHTML = "Failed to load content.";
     });
+</script>
