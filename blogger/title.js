@@ -4,12 +4,8 @@ function getRandomPosition() {
   return { x, y };
 }
 
-function generateHTML() {
+function generateHTMLStringOnly() {
   const text = document.getElementById('sourceText')?.innerText || 'Default Text';
-
-  const container = document.getElementById('outputContainer');
-  container.innerHTML = ''; // Clear previous output
-
   const elements = [
     ['<p>', '</p>'],
     ['<b>', '</b>'],
@@ -20,69 +16,47 @@ function generateHTML() {
     ['<h3>', '</h3>']
   ];
 
+  let htmlContent = '';
+
   elements.forEach(tag => {
     const { x, y } = getRandomPosition();
-    const elementHTML = `${tag[0]}${text}${tag[1]}`;
-
-    const element = document.createElement('div');
-    element.innerHTML = elementHTML;
-    element.style.position = 'absolute';
-    element.style.top = `${y}px`;
-    element.style.left = `${x}px`;
-
-    container.appendChild(element);
+    htmlContent += `<div style="position: absolute; top: ${y}px; left: ${x}px;">${tag[0]}${text}${tag[1]}</div>\n`;
   });
 
-  // Add Table
-  const tableHTML = `
+  const { x: xTable, y: yTable } = getRandomPosition();
+  htmlContent += `<div style="position: absolute; top: ${yTable}px; left: ${xTable}px;">
     <table border="1" cellpadding="5">
       <tr><th>Title</th></tr>
       <tr><td>${text}</td></tr>
     </table>
-  `;
-  const { x: xTable, y: yTable } = getRandomPosition();
-  const table = document.createElement('div');
-  table.innerHTML = tableHTML;
-  table.style.position = 'absolute';
-  table.style.top = `${yTable}px`;
-  table.style.left = `${xTable}px`;
-  container.appendChild(table);
+  </div>\n`;
 
-  // Add UL
-  const ulHTML = `
+  const { x: xUl, y: yUl } = getRandomPosition();
+  htmlContent += `<div style="position: absolute; top: ${yUl}px; left: ${xUl}px;">
     <ul>
       <li>${text} 1</li>
       <li>${text} 2</li>
       <li>${text} 3</li>
     </ul>
-  `;
-  const { x: xUl, y: yUl } = getRandomPosition();
-  const ul = document.createElement('div');
-  ul.innerHTML = ulHTML;
-  ul.style.position = 'absolute';
-  ul.style.top = `${yUl}px`;
-  ul.style.left = `${xUl}px`;
-  container.appendChild(ul);
+  </div>\n`;
 
-  // Add OL
-  const olHTML = `
+  const { x: xOl, y: yOl } = getRandomPosition();
+  htmlContent += `<div style="position: absolute; top: ${yOl}px; left: ${xOl}px;">
     <ol>
       <li>${text} A</li>
       <li>${text} B</li>
       <li>${text} C</li>
     </ol>
-  `;
-  const { x: xOl, y: yOl } = getRandomPosition();
-  const ol = document.createElement('div');
-  ol.innerHTML = olHTML;
-  ol.style.position = 'absolute';
-  ol.style.top = `${yOl}px`;
-  ol.style.left = `${xOl}px`;
-  container.appendChild(ol);
+  </div>\n`;
+
+  // 👉 You can console.log or return this string
+  console.log(htmlContent);
+  return htmlContent;
 }
 
+// Call this function when needed (e.g., on window load)
 window.onload = () => {
   if (document.getElementById('sourceText')) {
-    generateHTML();
+    generateHTMLStringOnly();
   }
 };
