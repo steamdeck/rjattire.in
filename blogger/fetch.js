@@ -1,4 +1,5 @@
-  function getRandomPosition() {
+ <script>
+    function getRandomPosition() {
       const x = Math.random() * (window.innerWidth - 150);
       const y = Math.random() * (window.innerHeight - 100);
       return { x, y };
@@ -106,3 +107,4 @@
         generateHTML();
       }
     };
+  </script>
