@@ -5,7 +5,7 @@ function getRandomPosition() {
 }
 
 function generateHTML() {
-  const text = document.getElementById('titleInput')?.value || 'Sample Text';
+  const text = document.getElementById('sourceText')?.innerText || 'Default Text';
   const container = document.getElementById('outputContainer');
   const htmlOutput = document.getElementById('htmlOutput');
   container.innerHTML = '';
@@ -51,7 +51,7 @@ function generateHTML() {
   container.appendChild(table);
   htmlContent += `<div style="position: absolute; top: ${yTable}px; left: ${xTable}px;">${tableHTML}</div>\n`;
 
-  // UL
+  // Unordered List
   const ulHTML = `
     <ul>
       <li>${text} 1</li>
@@ -68,7 +68,7 @@ function generateHTML() {
   container.appendChild(ul);
   htmlContent += `<div style="position: absolute; top: ${yUl}px; left: ${xUl}px;">${ulHTML}</div>\n`;
 
-  // OL
+  // Ordered List
   const olHTML = `
     <ol>
       <li>${text} A</li>
@@ -88,9 +88,9 @@ function generateHTML() {
   htmlOutput.textContent = htmlContent;
 }
 
-// Optional: Auto-run once with default text on load
+// Auto-generate on load
 window.onload = () => {
-  if (document.getElementById('titleInput')) {
+  if (document.getElementById('sourceText')) {
     generateHTML();
   }
 };
