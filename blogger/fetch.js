@@ -1,108 +1,108 @@
-document.addEventListener("DOMContentLoaded", function() {
-  const sheetID = "1mEvctcgkjIY7_Z_rdnpxUcWGVf8ePWQAVrJVVhFooJo";
-  const tabName = "Sheet1";
-  const url = `https://opensheet.elk.sh/${sheetID}/${tabName}`;
+function getRandomPosition() {
+  const x = Math.random() * (window.innerWidth - 150);
+  const y = Math.random() * (window.innerHeight - 100);
+  return { x, y };
+}
 
-  function shuffle(array) {
-    const arr = array.slice();
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
+function generateHTML() {
+  // Get the text from the HTML element
+  const text = document.getElementById('sourceText')?.innerText || 'Default Text';
+  console.log('Fetched text:', text); // Log the fetched text to debug
+
+  // Clear the previous output to avoid duplication
+  const container = document.getElementById('outputContainer');
+  const htmlOutput = document.getElementById('htmlOutput');
+  container.innerHTML = '';
+  htmlOutput.textContent = '';
+
+  const elements = [
+    ['<p>', '</p>'],
+    ['<b>', '</b>'],
+    ['<u>', '</u>'],
+    ['<i>', '</i>'],
+    ['<h1>', '</h1>'],
+    ['<h2>', '</h2>'],
+    ['<h3>', '</h3>']
+  ];
+
+  let htmlContent = '';
+
+  // Loop through each element and create it at a random position
+  elements.forEach(tag => {
+    const { x, y } = getRandomPosition();
+    const elementHTML = `${tag[0]}${text}${tag[1]}`;
+    
+    // Create a new div for each element
+    const element = document.createElement('div');
+    element.innerHTML = elementHTML;
+    element.style.position = 'absolute';
+    element.style.top = `${y}px`;
+    element.style.left = `${x}px`;
+
+    // Append the element to the container
+    container.appendChild(element);
+
+    // Build the corresponding HTML output for display
+    htmlContent += `<div style="position: absolute; top: ${y}px; left: ${x}px;">${elementHTML}</div>\n`;
+  });
+
+  // Add a table with the dynamic text
+  const tableHTML = `
+    <table border="1" cellpadding="5">
+      <tr><th>Title</th></tr>
+      <tr><td>${text}</td></tr>
+    </table>
+  `;
+  const { x: xTable, y: yTable } = getRandomPosition();
+  const table = document.createElement('div');
+  table.innerHTML = tableHTML;
+  table.style.position = 'absolute';
+  table.style.top = `${yTable}px`;
+  table.style.left = `${xTable}px`;
+  container.appendChild(table);
+  htmlContent += `<div style="position: absolute; top: ${yTable}px; left: ${xTable}px;">${tableHTML}</div>\n`;
+
+  // Add an unordered list (UL) with the dynamic text
+  const ulHTML = `
+    <ul>
+      <li>${text} 1</li>
+      <li>${text} 2</li>
+      <li>${text} 3</li>
+    </ul>
+  `;
+  const { x: xUl, y: yUl } = getRandomPosition();
+  const ul = document.createElement('div');
+  ul.innerHTML = ulHTML;
+  ul.style.position = 'absolute';
+  ul.style.top = `${yUl}px`;
+  ul.style.left = `${xUl}px`;
+  container.appendChild(ul);
+  htmlContent += `<div style="position: absolute; top: ${yUl}px; left: ${xUl}px;">${ulHTML}</div>\n`;
+
+  // Add an ordered list (OL) with the dynamic text
+  const olHTML = `
+    <ol>
+      <li>${text} A</li>
+      <li>${text} B</li>
+      <li>${text} C</li>
+    </ol>
+  `;
+  const { x: xOl, y: yOl } = getRandomPosition();
+  const ol = document.createElement('div');
+  ol.innerHTML = olHTML;
+  ol.style.position = 'absolute';
+  ol.style.top = `${yOl}px`;
+  ol.style.left = `${xOl}px`;
+  container.appendChild(ol);
+  htmlContent += `<div style="position: absolute; top: ${yOl}px; left: ${xOl}px;">${olHTML}</div>\n`;
+
+  // Display the HTML content
+  htmlOutput.textContent = htmlContent;
+}
+
+// Auto-generate on load
+window.onload = () => {
+  if (document.getElementById('sourceText')) {
+    generateHTML();
   }
-
-  function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      const rows = shuffle(data.filter(row => row.Text && row.URL));
-      const getRandomRow = () => rows[Math.floor(Math.random() * rows.length)];
-      const blocks = [];
-
-      // <li>
-      const liCount = getRandomInt(5, 11);
-      const liItems = [];
-      for (let i = 0; i < liCount; i++) {
-        liItems.push(`<li><a href="${getRandomRow().URL}">${getRandomRow().Text}</a></li>`);
-      }
-      blocks.push(`<ul>${liItems.join("")}</ul>`);
-
-      // <blockquote>
-      for (let i = 0; i < getRandomInt(3, 3); i++) {
-        const row = getRandomRow();
-        blocks.push(`<blockquote><em>${row.Text}</em> - <a href="${row.URL}">Read more</a></blockquote>`);
-      }
-
-      // <strong>
-      for (let i = 0; i < getRandomInt(2, 5); i++) {
-        const row = getRandomRow();
-        blocks.push(`<p><strong><a href="${row.URL}" target="_blank">${row.Text}</a></strong></p>`);
-      }
-
-      // <em>
-      for (let i = 0; i < getRandomInt(2, 5); i++) {
-        const row = getRandomRow();
-        blocks.push(`<p><em>${row.Text}</em> — <a href="${row.URL}">Explore</a></p>`);
-      }
-
-      // <article>
-      const articleRow = getRandomRow();
-      blocks.push(`<article><header><h3>${articleRow.Text}</h3></header><footer><a href="${articleRow.URL}">Visit</a></footer></article>`);
-
-      // <h1>
-      const h1Row = getRandomRow();
-      blocks.push(`<h1><a href="${h1Row.URL}">${h1Row.Text}</a></h1>`);
-
-      // <h2>
-      for (let i = 0; i < getRandomInt(2, 5); i++) {
-        const row = getRandomRow();
-        blocks.push(`<h2><a href="${row.URL}">${row.Text}</a></h2>`);
-      }
-
-      // <h3>
-      for (let i = 0; i < getRandomInt(2, 5); i++) {
-        const row = getRandomRow();
-        blocks.push(`<h3><a href="${row.URL}">${row.Text}</a></h3>`);
-      }
-
-      // <table>
-      const tableRows = [];
-      const trCount = getRandomInt(2, 9);
-      for (let i = 0; i < trCount; i++) {
-        const row = getRandomRow();
-        tableRows.push(`<tr><td><a href="${row.URL}">${row.Text}</a></td></tr>`);
-      }
-      blocks.push(`<table>${tableRows.join("")}</table>`);
-
-      // 4 clickable random images with random href
-      const imageRows = [];
-      while (imageRows.length < 4) {
-        const row = getRandomRow();
-        if (row.IMGURL) imageRows.push(row);
-      }
-
-      imageRows.forEach(imgRow => {
-        const linkRow = getRandomRow();
-        blocks.splice(
-          Math.floor(Math.random() * (blocks.length + 1)),
-          0,
-          `<a href="${linkRow.URL}" target="_blank">
-             <img src="${imgRow.IMGURL}" alt="${imgRow.Text}" title="${imgRow.Text}" 
-             style="max-width:100%;height:auto;border-radius:12px;margin:10px 0;">
-           </a>`
-        );
-      });
-
-      // Final shuffle for true randomness in placement
-      const finalHTML = shuffle(blocks).join("\n");
-      document.getElementById("randomArticle").innerHTML = finalHTML;
-    })
-    .catch(err => {
-      console.error("Error:", err);
-      document.getElementById("randomArticle").innerHTML = "Failed to load content.";
-    });
-});
+};
