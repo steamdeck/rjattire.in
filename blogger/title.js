@@ -25,32 +25,32 @@
 
       const { x: xTable, y: yTable } = getRandomPosition();
       htmlContent += `<div style="position: absolute; top: ${yTable}px; left: ${xTable}px;">
-  <table border="1" cellpadding="5">
-    <tr><th>Title</th></tr>
-    <tr><td>${text}</td></tr>
-  </table>
-</div>\n`;
+        <table border="1" cellpadding="5">
+          <tr><th>Title</th></tr>
+          <tr><td>${text}</td></tr>
+        </table>
+      </div>\n`;
 
       const { x: xUl, y: yUl } = getRandomPosition();
       htmlContent += `<div style="position: absolute; top: ${yUl}px; left: ${xUl}px;">
-  <ul>
-    <li>${text} 1</li>
-    <li>${text} 2</li>
-    <li>${text} 3</li>
-  </ul>
-</div>\n`;
+        <ul>
+          <li>${text} 1</li>
+          <li>${text} 2</li>
+          <li>${text} 3</li>
+        </ul>
+      </div>\n`;
 
       const { x: xOl, y: yOl } = getRandomPosition();
       htmlContent += `<div style="position: absolute; top: ${yOl}px; left: ${xOl}px;">
-  <ol>
-    <li>${text} A</li>
-    <li>${text} B</li>
-    <li>${text} C</li>
-  </ol>
-</div>\n`;
+        <ol>
+          <li>${text} A</li>
+          <li>${text} B</li>
+          <li>${text} C</li>
+        </ol>
+      </div>\n`;
 
-      // Show HTML code in the page
-      document.getElementById('codeOutput').textContent = htmlContent;
+      // ✅ Render HTML content instead of showing it as code
+      document.getElementById('codeOutput').innerHTML = htmlContent;
     }
 
     window.onload = () => {
