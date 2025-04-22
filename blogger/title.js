@@ -5,14 +5,10 @@ function getRandomPosition() {
 }
 
 function generateHTML() {
-  // Get the text from the HTML element
   const text = document.getElementById('sourceText')?.innerText || 'Default Text';
 
-  // Clear the previous output to avoid duplication
   const container = document.getElementById('outputContainer');
-  const htmlOutput = document.getElementById('htmlOutput');
-  container.innerHTML = '';
-  htmlOutput.textContent = '';
+  container.innerHTML = ''; // Clear previous output
 
   const elements = [
     ['<p>', '</p>'],
@@ -24,28 +20,20 @@ function generateHTML() {
     ['<h3>', '</h3>']
   ];
 
-  let htmlContent = '';
-
-  // Loop through each element and create it at a random position
   elements.forEach(tag => {
     const { x, y } = getRandomPosition();
     const elementHTML = `${tag[0]}${text}${tag[1]}`;
-    
-    // Create a new div for each element
+
     const element = document.createElement('div');
     element.innerHTML = elementHTML;
     element.style.position = 'absolute';
     element.style.top = `${y}px`;
     element.style.left = `${x}px`;
 
-    // Append the element to the container
     container.appendChild(element);
-
-    // Build the corresponding HTML output for display
-    htmlContent += `<div style="position: absolute; top: ${y}px; left: ${x}px;">${elementHTML}</div>\n`;
   });
 
-  // Add a table with the dynamic text
+  // Add Table
   const tableHTML = `
     <table border="1" cellpadding="5">
       <tr><th>Title</th></tr>
@@ -59,9 +47,8 @@ function generateHTML() {
   table.style.top = `${yTable}px`;
   table.style.left = `${xTable}px`;
   container.appendChild(table);
-  htmlContent += `<div style="position: absolute; top: ${yTable}px; left: ${xTable}px;">${tableHTML}</div>\n`;
 
-  // Add an unordered list (UL) with the dynamic text
+  // Add UL
   const ulHTML = `
     <ul>
       <li>${text} 1</li>
@@ -76,9 +63,8 @@ function generateHTML() {
   ul.style.top = `${yUl}px`;
   ul.style.left = `${xUl}px`;
   container.appendChild(ul);
-  htmlContent += `<div style="position: absolute; top: ${yUl}px; left: ${xUl}px;">${ulHTML}</div>\n`;
 
-  // Add an ordered list (OL) with the dynamic text
+  // Add OL
   const olHTML = `
     <ol>
       <li>${text} A</li>
@@ -93,13 +79,8 @@ function generateHTML() {
   ol.style.top = `${yOl}px`;
   ol.style.left = `${xOl}px`;
   container.appendChild(ol);
-  htmlContent += `<div style="position: absolute; top: ${yOl}px; left: ${xOl}px;">${olHTML}</div>\n`;
-
-  // Display the HTML content
-  htmlOutput.textContent = htmlContent;
 }
 
-// Auto-generate on load
 window.onload = () => {
   if (document.getElementById('sourceText')) {
     generateHTML();
